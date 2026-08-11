@@ -252,17 +252,11 @@ const Home = () => {
 
             <div className="col-lg-5">
               <div className="position-relative">
-                <div 
+                <div
                   className="position-absolute top-50 start-50 translate-middle w-100 h-100 rounded-circle"
                   style={{ background: 'radial-gradient(circle, rgba(5,79,163,0.15) 0%, rgba(5,79,163,0) 70%)', filter: 'blur(30px)', zIndex: -1 }}
                 ></div>
-                <img
-                  ref={heroImageRef}
-                  src="/photo.jpg"
-                  alt="Students Collaboration"
-                  className="img-fluid rounded-4 shadow-lg border border-2 border-white"
-                  style={{ borderRadius: '28px' }}
-                />
+
               </div>
             </div>
           </div>
@@ -274,7 +268,7 @@ const Home = () => {
         <div ref={statsSectionRef} className="row g-4 text-center">
           <div className="col-md-3 col-6">
             <div className="glass-card p-4 h-100">
-              <div 
+              <div
                 className="d-inline-flex align-items-center justify-content-center text-primary rounded-circle mb-2"
                 style={{ width: '48px', height: '48px', background: 'var(--primary-light)' }}
               >
@@ -286,7 +280,7 @@ const Home = () => {
           </div>
           <div className="col-md-3 col-6">
             <div className="glass-card p-4 h-100">
-              <div 
+              <div
                 className="d-inline-flex align-items-center justify-content-center text-primary rounded-circle mb-2"
                 style={{ width: '48px', height: '48px', background: 'var(--primary-light)' }}
               >
@@ -298,7 +292,7 @@ const Home = () => {
           </div>
           <div className="col-md-3 col-6">
             <div className="glass-card p-4 h-100">
-              <div 
+              <div
                 className="d-inline-flex align-items-center justify-content-center text-primary rounded-circle mb-2"
                 style={{ width: '48px', height: '48px', background: 'var(--primary-light)' }}
               >
@@ -310,7 +304,7 @@ const Home = () => {
           </div>
           <div className="col-md-3 col-6">
             <div className="glass-card p-4 h-100">
-              <div 
+              <div
                 className="d-inline-flex align-items-center justify-content-center text-primary rounded-circle mb-2"
                 style={{ width: '48px', height: '48px', background: 'var(--primary-light)' }}
               >
