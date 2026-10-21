@@ -38,31 +38,41 @@ const AdminPanel = () => {
   const fetchAdminData = useCallback(async () => {
     setLoading(true);
     try {
-      const [st, usrs, res, skl] = await Promise.all([
+      const results = await Promise.allSettled([
         adminService.getStatistics(),
         adminService.getUsers(),
         adminService.getResources(),
         adminService.getSkills(),
       ]);
-      setStats(st || {
-        totalUsers: 0,
-        totalResources: 0,
-        pendingResources: 0,
-        approvedResources: 0,
-        totalSkills: 0,
-        pendingSkills: 0,
-        approvedSkills: 0,
-      });
-      setUsers(usrs || []);
-      setResources(res || []);
-      setSkills(skl || []);
+
+      const [stRes, usrsRes, resRes, sklRes] = results;
+
+      if (stRes.status === 'fulfilled' && stRes.value) {
+        setStats(stRes.value);
+      }
+      if (usrsRes.status === 'fulfilled' && usrsRes.value) {
+        setUsers(usrsRes.value);
+      }
+      if (resRes.status === 'fulfilled' && resRes.value) {
+        setResources(resRes.value);
+      }
+      if (sklRes.status === 'fulfilled' && sklRes.value) {
+        setSkills(sklRes.value);
+      }
+
+      // Check if all rejected
+      const allRejected = results.every(r => r.status === 'rejected');
+      if (allRejected) {
+        const firstError = results[0].reason;
+        if (firstError?.response?.status === 503 || firstError?.message?.includes('Network Error')) {
+          showError("Backend server is waking up from hibernation (Render free tier). Please wait ~30-45 seconds and click Refresh.");
+        } else {
+          showError("Failed to load admin data. Please verify your connection.");
+        }
+      }
     } catch (err) {
       console.error("Admin data error:", err);
-      if (err.response?.status === 503 || err.message?.includes('Network Error')) {
-        showError("Backend server is waking up from hibernation (Render free tier). Please wait ~30-45 seconds and click Refresh.");
-      } else {
-        showError(err.response?.data?.message || "Failed to load admin data. Please verify your connection.");
-      }
+      showError("Failed to load admin data.");
     } finally {
       setLoading(false);
     }

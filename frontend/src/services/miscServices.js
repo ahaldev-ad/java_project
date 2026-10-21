@@ -51,13 +51,29 @@ export const adminService = {
   },
 
   getResources: async () => {
-    const response = await API.get('/admin/resources');
-    return response.data.content || response.data;
+    try {
+      const response = await API.get('/admin/resources');
+      return response.data.content || response.data;
+    } catch (e) {
+      if (e.response?.status === 404) {
+        const fallback = await API.get('/resources');
+        return fallback.data.content || fallback.data;
+      }
+      throw e;
+    }
   },
 
   getSkills: async () => {
-    const response = await API.get('/admin/skills');
-    return response.data.content || response.data;
+    try {
+      const response = await API.get('/admin/skills');
+      return response.data.content || response.data;
+    } catch (e) {
+      if (e.response?.status === 404) {
+        const fallback = await API.get('/skills');
+        return fallback.data.content || fallback.data;
+      }
+      throw e;
+    }
   },
 
   approveResource: async (id) => {
