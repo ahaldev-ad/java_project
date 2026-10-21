@@ -58,7 +58,11 @@ const AdminPanel = () => {
       setSkills(skl || []);
     } catch (err) {
       console.error("Admin data error:", err);
-      showError("Failed to load admin data.");
+      if (err.response?.status === 503 || err.message?.includes('Network Error')) {
+        showError("Backend server is waking up from hibernation (Render free tier). Please wait ~30-45 seconds and click Refresh.");
+      } else {
+        showError(err.response?.data?.message || "Failed to load admin data. Please verify your connection.");
+      }
     } finally {
       setLoading(false);
     }

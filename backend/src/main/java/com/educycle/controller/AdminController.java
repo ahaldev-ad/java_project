@@ -27,6 +27,9 @@ public class AdminController {
     @Autowired
     private SkillRepository skillRepository;
 
+    @Autowired
+    private com.educycle.service.FirebaseService firebaseService;
+
     @GetMapping("/stats")
     public ResponseEntity<Map<String, Object>> getAdminStats() {
         Map<String, Object> stats = new HashMap<>();
@@ -47,7 +50,10 @@ public class AdminController {
 
     @DeleteMapping("/users/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        userRepository.deleteById(id);
+        userRepository.findById(id).ifPresent(user -> {
+            firebaseService.deleteUserByEmail(user.getEmail());
+            userRepository.delete(user);
+        });
         return ResponseEntity.noContent().build();
     }
 
