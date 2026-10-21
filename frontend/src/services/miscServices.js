@@ -51,8 +51,43 @@ export const adminService = {
   },
 
   getResources: async () => {
-    const response = await API.get('/resources');
+    const response = await API.get('/admin/resources');
     return response.data.content || response.data;
+  },
+
+  getSkills: async () => {
+    const response = await API.get('/admin/skills');
+    return response.data.content || response.data;
+  },
+
+  approveResource: async (id) => {
+    const response = await API.put(`/admin/resources/${id}/approve`);
+    return response.data;
+  },
+
+  rejectResource: async (id) => {
+    const response = await API.put(`/admin/resources/${id}/reject`);
+    return response.data;
+  },
+
+  deleteResource: async (id) => {
+    const response = await API.delete(`/admin/resources/${id}`);
+    return response.data;
+  },
+
+  approveSkill: async (id) => {
+    const response = await API.put(`/admin/skills/${id}/approve`);
+    return response.data;
+  },
+
+  rejectSkill: async (id) => {
+    const response = await API.put(`/admin/skills/${id}/reject`);
+    return response.data;
+  },
+
+  deleteSkill: async (id) => {
+    const response = await API.delete(`/admin/skills/${id}`);
+    return response.data;
   },
 
   suspendUser: async (userId) => {
@@ -61,7 +96,7 @@ export const adminService = {
   },
 
   deletePost: async (postId) => {
-    const response = await API.delete(`/resources/${postId}`);
+    const response = await API.delete(`/admin/resources/${postId}`);
     return response.data;
   },
 

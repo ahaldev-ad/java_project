@@ -105,7 +105,7 @@ const Resources = () => {
     try {
       const userId = user?.userId || user?.id;
       await resourceService.create({ ...newResource, userId });
-      showSuccess("Resource posted successfully!");
+      showSuccess("Resource submitted! It will be visible in the exchange after Admin approval.");
       setShowPostModal(false);
       setNewResource({
         title: '',
@@ -311,9 +311,15 @@ const Resources = () => {
                   </div>
                 </div>
 
-                <div className="modal-footer p-4 pt-0 border-0">
-                  <button type="button" className="btn btn-light px-4" onClick={() => setShowPostModal(false)}>Cancel</button>
-                  <button type="submit" className="btn btn-primary px-4 fw-bold">Publish Listing</button>
+                <div className="modal-footer p-4 pt-0 border-0 flex-column align-items-stretch gap-2">
+                  <div className="alert alert-info border-0 p-2.5 mb-1 small d-flex align-items-center gap-2">
+                    <i className="bi bi-shield-check text-primary fs-5"></i>
+                    <span>Submissions are verified by platform administrators before appearing on campus listings.</span>
+                  </div>
+                  <div className="d-flex justify-content-end gap-2">
+                    <button type="button" className="btn btn-light px-4" onClick={() => setShowPostModal(false)}>Cancel</button>
+                    <button type="submit" className="btn btn-primary px-4 fw-bold">Submit for Approval</button>
+                  </div>
                 </div>
               </form>
             </div>
