@@ -15,7 +15,6 @@ const Register = () => {
     lastName: '',
     email: '',
     phone: '',
-    college: '',
     department: '',
     password: '',
     confirmPassword: ''
@@ -125,25 +124,14 @@ const Register = () => {
                     />
                   </div>
 
-                  <div className="col-md-6">
-                    <label className="form-label fw-semibold text-dark">College / University</label>
-                    <input
-                      type="text"
-                      name="college"
-                      className="form-control"
-                      required
-                      value={formData.college}
-                      onChange={handleChange}
-                    />
-                  </div>
-
-                  <div className="col-md-6">
+                  <div className="col-12">
                     <label className="form-label fw-semibold text-dark">Department / Major</label>
                     <input
                       type="text"
                       name="department"
                       className="form-control"
                       required
+                      placeholder="e.g. Computer Science, Mechanical, Biology"
                       value={formData.department}
                       onChange={handleChange}
                     />
