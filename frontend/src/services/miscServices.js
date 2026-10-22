@@ -121,3 +121,29 @@ export const adminService = {
     return response.data;
   }
 };
+
+export const statsService = {
+  getLiveStats: async () => {
+    try {
+      const response = await API.get('/stats');
+      return response.data;
+    } catch (e) {
+      // Fallback to /admin/stats if public /stats is not yet deployed on server
+      try {
+        const adminRes = await API.get('/admin/stats');
+        const data = adminRes.data || {};
+        return {
+          activeStudents: data.totalUsers || 0,
+          totalUsers: data.totalUsers || 0,
+          resourcesShared: data.approvedResources || data.totalResources || 0,
+          totalResources: data.totalResources || 0,
+          skillsOffered: data.approvedSkills || data.totalSkills || 0,
+          skillSessions: data.approvedSkills || data.totalSkills || 0,
+          totalSkills: data.totalSkills || 0,
+        };
+      } catch (err) {
+        return null;
+      }
+    }
+  }
+};
