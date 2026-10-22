@@ -46,8 +46,10 @@ const Home = () => {
           resourceService.getAll({ limit: 4 }),
           skillService.getAll({ limit: 4 })
         ]);
-        setResources(resData.content || resData || []);
-        setSkills(skillData.content || skillData || []);
+        const rawRes = resData.content || resData || [];
+        const rawSkills = skillData.content || skillData || [];
+        setResources(rawRes.filter(item => item.approvalStatus ? item.approvalStatus === 'APPROVED' : item.approved !== false));
+        setSkills(rawSkills.filter(item => item.approvalStatus ? item.approvalStatus === 'APPROVED' : item.approved !== false));
       } catch (err) {
         console.error("Failed to load home data:", err);
       } finally {

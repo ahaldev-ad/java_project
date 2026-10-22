@@ -44,7 +44,15 @@ const Skills = () => {
     setLoading(true);
     try {
       const data = await skillService.getAll({ category, level, search });
-      setSkills(data.content || data || []);
+      const raw = data.content || data || [];
+      // Strictly show only approved skills in public directory
+      const approvedOnly = raw.filter(item => {
+        if (item.approvalStatus) {
+          return item.approvalStatus === 'APPROVED';
+        }
+        return item.approved !== false;
+      });
+      setSkills(approvedOnly);
     } catch (err) {
       showError("Failed to fetch skill offerings.");
     } finally {

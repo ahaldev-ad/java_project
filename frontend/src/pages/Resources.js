@@ -45,7 +45,15 @@ const Resources = () => {
     setLoading(true);
     try {
       const data = await resourceService.getAll({ category, exchangeType, search });
-      setResources(data.content || data || []);
+      const raw = data.content || data || [];
+      // Strictly show only approved resources in public exchange
+      const approvedOnly = raw.filter(item => {
+        if (item.approvalStatus) {
+          return item.approvalStatus === 'APPROVED';
+        }
+        return item.approved !== false;
+      });
+      setResources(approvedOnly);
     } catch (err) {
       showError("Failed to fetch resources.");
     } finally {
